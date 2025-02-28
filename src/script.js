@@ -7,5 +7,6 @@ form.addEventListener('submit', (e) => {
   const task = document.createElement('h3'); 
   task.innerText = input.value;
   tasks.append(task);
+  tasks.style.display = 'block';
   input.value = ''; // Limpa o campo de entrada após adicionar a tarefa
 });
