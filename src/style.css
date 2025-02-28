@@ -7,8 +7,9 @@ body {
     flex-direction: column; /* Alinhar itens verticalmente */
     justify-content: flex-start; /* Alinhar itens no topo */
     align-items: center;
-    min-height: 100vh; /* Garante que o body ocupe pelo menos 100% da altura da janela */
-    overflow: auto; /* Permitir rolagem */
+    min-height: 100vh;
+    padding-bottom: 50px;
+    overflow: auto;
 }
 
 .main_container {
@@ -56,4 +57,10 @@ body {
 
 #tasks h3 {
     text-align: left;
+    margin: 0;
+    margin-top: 20px;
+}
+
+#tasks h3:not(:last-child) {
+    margin-bottom: 60px;
 }
