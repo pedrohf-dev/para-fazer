@@ -58,7 +58,6 @@ body {
 #tasks h3 {
     text-align: left;
     margin: 0;
-    margin-top: 20px;
 }
 
 #tasks h3:not(:last-child) {

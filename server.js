@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const Task = require('./models/model');
 require('dotenv').config();
 
 const app = express();
@@ -15,3 +16,10 @@ mongoose.connect(`mongodb+srv://pedrocontahf:${process.env.DB_PASSWORD}@cluster0
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 });
+
+app.post('/save-task', async (req, res) => {
+    const { text } = req.body;
+    const saveTask = new Task({ text });
+    await saveTask.save();
+})
+
