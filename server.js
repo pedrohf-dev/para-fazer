@@ -23,3 +23,7 @@ app.post('/save-task', async (req, res) => {
     await saveTask.save();
 })
 
+app.get('/get-tasks', async (req, res) => {
+    const tasks = await Task.find({});
+    res.json(tasks);
+});
