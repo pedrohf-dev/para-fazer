@@ -18,16 +18,11 @@ form.addEventListener('submit', async (e) => {
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'X';
   deleteButton.id = 'task-delete';
-  
-  deleteButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    taskContainer.remove();
-  });
 
   const task = document.createElement('h3');
   task.innerText = input.value;
   task.id = 'task-text';
-  
+
   label.appendChild(checkBox);
   label.appendChild(task);
   taskContainer.appendChild(label);
@@ -37,10 +32,27 @@ form.addEventListener('submit', async (e) => {
 
   input.value = '';
 
-  await fetch('/save-task', {
+  const response = await fetch('/save-task', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text: task.innerText })
+  });
+
+  const savedTask = await response.json(); 
+
+  deleteButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const response = await fetch(`/delete-task/${savedTask._id}`, {
+      method: 'DELETE'
+    });   
+    if (response.ok) {
+      taskContainer.remove();
+      if (tasks.children.length === 0) {
+        tasks.style.display = 'none';
+      };
+    } else {
+      console.error("Erro ao deletar tarefa do banco.");
+    }
   });
 
 });
@@ -64,6 +76,7 @@ async function loadTasks() {
     deleteButton.innerText = 'X';
     deleteButton.id = 'task-delete';
 
+
     const taskElement = document.createElement('h3');
     taskElement.innerText = task.text;
     taskElement.id = 'task-text';
@@ -75,6 +88,11 @@ async function loadTasks() {
       });
       if (response.ok) {
         taskContainer.remove();
+        if (tasks.children.length === 0) {
+          tasks.style.display = 'none';
+        };
+      } else {
+        console.error("Erro ao deletar tarefa do banco.");
       }
     });
 
@@ -83,14 +101,10 @@ async function loadTasks() {
     taskContainer.appendChild(label);
     taskContainer.appendChild(deleteButton);
     tasks.appendChild(taskContainer);
-
-    deleteButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      taskContainer.remove();
-    });
   });
+
   if (task_list.length > 0) {
     tasks.style.display = 'block';
-  }
+  };
 }
 loadTasks();

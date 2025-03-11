@@ -21,9 +21,16 @@ app.post('/save-task', async (req, res) => {
     const { text } = req.body;
     const saveTask = new Task({ text });
     await saveTask.save();
+    res.json(saveTask);
 })
 
 app.get('/get-tasks', async (req, res) => {
     const tasks = await Task.find({});
     res.json(tasks);
 });
+
+app.delete('/delete-task/:id', async (req, res) => {
+    const id = req.params.id
+    await Task.findByIdAndDelete(id)
+    res.json({sucess: true })
+})
