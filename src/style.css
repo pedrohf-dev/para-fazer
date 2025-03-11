@@ -43,6 +43,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    transition: ease-in-out 0.3s;
 }
 
 #tasks {
@@ -69,6 +70,8 @@ body {
 }
 
 #task-checkbox {
+    width: 20px;
+    height: 20px;
     margin-right: 20px;
 }
 
@@ -81,6 +84,30 @@ body {
     margin: 0;
 }
 
-#tasks h3:not(:last-child) {
-    margin-bottom: 60px;
+.task-container:last-child {
+    margin-bottom: 0;
+}
+
+#task-delete {
+    background-color: #c8c8c8;
+    color: rgb(27, 27, 27);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: 0.5s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#task-delete:hover {
+    background-color: rgb(119, 119, 119);
+    transition: 0.5s ease-in-out;
+}
+
+#q:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(21, 21, 21, 0.5);
+    transition: ease-in-out 0.3s;
 }
