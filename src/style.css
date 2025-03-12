@@ -46,8 +46,18 @@ body {
     transition: ease-in-out 0.3s;
 }
 
-#tasks {
+#todo_tasks {
     display: none;
+    background-color: rgb(255, 255, 255);
+    padding: 20px; 
+    margin-top: 20px;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#ex_tasks {
+    display: block;
     background-color: rgb(255, 255, 255);
     padding: 20px; 
     margin-top: 20px;
@@ -88,7 +98,7 @@ body {
     transition: all ease-in-out 0.3s;
 }
 
-#tasks h3 {
+#todo_tasks h3 {
     text-align: left;
     margin: 0;
 }

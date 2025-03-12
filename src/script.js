@@ -1,6 +1,7 @@
 const form = document.getElementById('form');
 const input = document.getElementById('q');
-const tasks = document.getElementById('tasks');
+const todo_tasks = document.getElementById('todo_tasks');
+const ex_tasks = document.getElementById('ex_tasks');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -27,8 +28,15 @@ form.addEventListener('submit', async (e) => {
   label.appendChild(task);
   taskContainer.appendChild(label);
   taskContainer.appendChild(deleteButton);
-  tasks.appendChild(taskContainer);
-  tasks.style.display = 'block';
+  todo_tasks.appendChild(taskContainer);
+  todo_tasks.style.display = 'block';
+
+  checkBox.addEventListener('change', async (e) => {
+    e.preventDefault()
+    if(checkBox.checked) {
+      ex_tasks.appendChild(taskContainer)
+    }
+  });
 
   input.value = '';
 
@@ -47,8 +55,8 @@ form.addEventListener('submit', async (e) => {
     });   
     if (response.ok) {
       taskContainer.remove();
-      if (tasks.children.length === 0) {
-        tasks.style.display = 'none';
+      if (todo_tasks.children.length === 0) {
+        todo_tasks.style.display = 'none';
       };
     } else {
       console.error("Erro ao deletar tarefa do banco.");
@@ -88,8 +96,8 @@ async function loadTasks() {
       });
       if (response.ok) {
         taskContainer.remove();
-        if (tasks.children.length === 0) {
-          tasks.style.display = 'none';
+        if (todo_tasks.children.length === 0) {
+          todo_tasks.style.display = 'none';
         };
       } else {
         console.error("Erro ao deletar tarefa do banco.");
@@ -100,12 +108,22 @@ async function loadTasks() {
     label.appendChild(taskElement);
     taskContainer.appendChild(label);
     taskContainer.appendChild(deleteButton);
-    tasks.appendChild(taskContainer);
+    todo_tasks.appendChild(taskContainer);
+    
+    checkBox.addEventListener('change', async (e) => {
+      e.preventDefault()
+      if(checkBox.checked) {
+        ex_tasks.appendChild(taskContainer)
+      } else {
+        todo_tasks.appendChild(taskContainer)
+      }
+    });
 
   });
 
+
   if (task_list.length > 0) {
-    tasks.style.display = 'block';
+    todo_tasks.style.display = 'block';
   };
 }
 
