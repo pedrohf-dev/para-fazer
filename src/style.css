@@ -73,10 +73,19 @@ body {
     width: 20px;
     height: 20px;
     margin-right: 20px;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+#task-checkbox:checked + #task-text {
+    color: grey;
+    text-decoration: line-through;
+    transition: all ease-in-out 0.3s;
 }
 
 #task-text {
     margin: 0;
+    transition: all ease-in-out 0.3s;
 }
 
 #tasks h3 {

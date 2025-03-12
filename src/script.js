@@ -101,10 +101,12 @@ async function loadTasks() {
     taskContainer.appendChild(label);
     taskContainer.appendChild(deleteButton);
     tasks.appendChild(taskContainer);
+
   });
 
   if (task_list.length > 0) {
     tasks.style.display = 'block';
   };
 }
+
 loadTasks();
