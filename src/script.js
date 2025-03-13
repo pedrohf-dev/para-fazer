@@ -102,6 +102,7 @@ async function loadTasks() {
       taskElement.style.textDecoration = 'line-through';
     }
 
+
     deleteButton.addEventListener('click', async () => {
       const response = await fetch(`/delete-task/${task._id}`, {
         method: 'DELETE'
@@ -123,8 +124,10 @@ async function loadTasks() {
 
       if (checkBox.checked) {
         ex_tasks.appendChild(taskContainer);
+        taskElement.style.textDecoration = 'line-through';
       } else {
         todo_tasks.appendChild(taskContainer);
+        taskElement.style.textDecoration = 'none';
       }
     });
 
