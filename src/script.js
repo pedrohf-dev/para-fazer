@@ -14,15 +14,15 @@ form.addEventListener('submit', async (e) => {
 
   const checkBox = document.createElement('input');
   checkBox.type = 'checkbox';
-  checkBox.id = 'task-checkbox';
+  checkBox.classList.add('task-checkbox');
 
   const deleteButton = document.createElement('button');
   deleteButton.innerText = 'X';
-  deleteButton.id = 'task-delete';
+  deleteButton.classList.add('task-delete');
 
   const task = document.createElement('h3');
   task.innerText = input.value;
-  task.id = 'task-text';
+  task.classList.add('task-text');
 
   label.appendChild(checkBox);
   label.appendChild(task);
@@ -30,46 +30,55 @@ form.addEventListener('submit', async (e) => {
   taskContainer.appendChild(deleteButton);
   todo_tasks.appendChild(taskContainer);
   todo_tasks.style.display = 'block';
+  input.value = '';
 
-  checkBox.addEventListener('change', async (e) => {
-    e.preventDefault()
-    if(checkBox.checked) {
-      ex_tasks.appendChild(taskContainer)
+  checkBox.addEventListener('change', () => {
+    if (checkBox.checked) {
+      ex_tasks.appendChild(taskContainer);
+    } else {
+      todo_tasks.appendChild(taskContainer);
     }
   });
-
-  input.value = '';
 
   const response = await fetch('/save-task', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: task.innerText })
+    body: JSON.stringify({ text: task.innerText, completed: checkBox.checked })
   });
+  const savedTask = await response.json();
 
-  const savedTask = await response.json(); 
-
-  deleteButton.addEventListener('click', async (e) => {
-    e.preventDefault();
+  deleteButton.addEventListener('click', async () => {
     const response = await fetch(`/delete-task/${savedTask._id}`, {
       method: 'DELETE'
-    });   
+    });
     if (response.ok) {
       taskContainer.remove();
       if (todo_tasks.children.length === 0) {
         todo_tasks.style.display = 'none';
-      };
-    } else {
-      console.error("Erro ao deletar tarefa do banco.");
+      }
     }
   });
 
+  checkBox.addEventListener('change', async () => {
+    await fetch(`/update-task/${savedTask._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed: checkBox.checked })
+    });
+
+    if (checkBox.checked) {
+      ex_tasks.appendChild(taskContainer);
+    } else {
+      todo_tasks.appendChild(taskContainer);
+    }
+  });
 });
 
 async function loadTasks() {
   const response = await fetch('/get-tasks');
   const task_list = await response.json();
-  task_list.forEach(task => {
 
+  task_list.forEach(task => {
     const taskContainer = document.createElement('div');
     taskContainer.classList.add('task-container');
 
@@ -78,19 +87,22 @@ async function loadTasks() {
 
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
-    checkBox.id = 'task-checkbox';
+    checkBox.classList.add('task-checkbox');
+    checkBox.checked = task.completed;
 
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'X';
-    deleteButton.id = 'task-delete';
-
+    deleteButton.classList.add('task-delete');
 
     const taskElement = document.createElement('h3');
     taskElement.innerText = task.text;
-    taskElement.id = 'task-text';
+    taskElement.classList.add('task-text');
 
-    deleteButton.addEventListener('click', async (e) => {
-      e.preventDefault();
+    if (task.completed) {
+      taskElement.style.textDecoration = 'line-through';
+    }
+
+    deleteButton.addEventListener('click', async () => {
       const response = await fetch(`/delete-task/${task._id}`, {
         method: 'DELETE'
       });
@@ -98,9 +110,21 @@ async function loadTasks() {
         taskContainer.remove();
         if (todo_tasks.children.length === 0) {
           todo_tasks.style.display = 'none';
-        };
+        }
+      }
+    });
+
+    checkBox.addEventListener('change', async () => {
+      await fetch(`/update-task/${task._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed: checkBox.checked })
+      });
+
+      if (checkBox.checked) {
+        ex_tasks.appendChild(taskContainer);
       } else {
-        console.error("Erro ao deletar tarefa do banco.");
+        todo_tasks.appendChild(taskContainer);
       }
     });
 
@@ -108,23 +132,17 @@ async function loadTasks() {
     label.appendChild(taskElement);
     taskContainer.appendChild(label);
     taskContainer.appendChild(deleteButton);
-    todo_tasks.appendChild(taskContainer);
-    
-    checkBox.addEventListener('change', async (e) => {
-      e.preventDefault()
-      if(checkBox.checked) {
-        ex_tasks.appendChild(taskContainer)
-      } else {
-        todo_tasks.appendChild(taskContainer)
-      }
-    });
 
+    if (task.completed) {
+      ex_tasks.appendChild(taskContainer);
+    } else {
+      todo_tasks.appendChild(taskContainer);
+    }
   });
-
 
   if (task_list.length > 0) {
     todo_tasks.style.display = 'block';
-  };
+  }
 }
 
 loadTasks();

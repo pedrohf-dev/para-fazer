@@ -18,8 +18,8 @@ app.listen(PORT, () => {
 });
 
 app.post('/save-task', async (req, res) => {
-    const { text } = req.body;
-    const saveTask = new Task({ text });
+    const { text, completed } = req.body;
+    const saveTask = new Task({ text, completed: false });
     await saveTask.save();
     res.json(saveTask);
 })
@@ -29,8 +29,17 @@ app.get('/get-tasks', async (req, res) => {
     res.json(tasks);
 });
 
+app.put('/update-task/:id', async (req, res) => {
+    const id = req.params.id
+    const task = await Task.findById(id)
+    const { completed } = req.body
+    task.completed = completed
+    await task.save()
+    res.json({sucess: true, task})
+});
+
 app.delete('/delete-task/:id', async (req, res) => {
     const id = req.params.id
     await Task.findByIdAndDelete(id)
     res.json({sucess: true })
-})
+});
