@@ -53,9 +53,6 @@ form.addEventListener('submit', async (e) => {
     });
     if (response.ok) {
       taskContainer.remove();
-      if (todo_tasks.children.length === 0) {
-        todo_tasks.style.display = 'none';
-      }
     }
   });
 
@@ -109,9 +106,6 @@ async function loadTasks() {
       });
       if (response.ok) {
         taskContainer.remove();
-        if (todo_tasks.children.length === 0) {
-          todo_tasks.style.display = 'none';
-        }
       }
     });
 
@@ -142,10 +136,6 @@ async function loadTasks() {
       todo_tasks.appendChild(taskContainer);
     }
   });
-
-  if (task_list.length > 0) {
-    todo_tasks.style.display = 'block';
-  }
 }
 
 loadTasks();
