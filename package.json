@@ -6,7 +6,7 @@
   "scripts": {
     "start": "live-server src",
     "build": "echo 'Build step not defined'",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server/server.js"
   },
   "author": "Your Name",
   "license": "MIT",
