@@ -2,7 +2,7 @@
   "name": "my-website",
   "version": "1.0.0",
   "description": "A simple website project",
-  "main": "src/index.html",
+  "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
     "build": "echo 'Build step not defined'",
@@ -11,9 +11,10 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "nodemon": "^3.1.9"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
   },
   "devDependencies": {
-    "live-server": "^1.2.1"
+    "nodemon": "^3.1.9"
   }
 }
