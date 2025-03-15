@@ -2,9 +2,9 @@
   "name": "my-website",
   "version": "1.0.0",
   "description": "A simple website project",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "build": "echo 'Build step not defined'",
     "dev": "nodemon server.js"
   },
