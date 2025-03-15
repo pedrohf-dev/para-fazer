@@ -4,7 +4,7 @@
   "description": "A simple website project",
   "main": "src/index.html",
   "scripts": {
-    "start": "live-server src",
+    "start": "node server/server.js",
     "build": "echo 'Build step not defined'",
     "dev": "nodemon server/server.js"
   },
