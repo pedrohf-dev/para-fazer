@@ -10,7 +10,7 @@ Este é um projeto simples de Lista de Tarefas (To-Do List) desenvolvido com HTM
 - ✅ Marcar tarefas como concluídas
 - ✅ Mover tarefas concluídas para uma seção separada
 - ✅ Excluir tarefas
-- ✅ Persistência de dados no backend (opcional)
+- ✅ Persistência de dados no backend
 
 ---
 
